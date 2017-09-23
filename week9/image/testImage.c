@@ -16,10 +16,26 @@ int main (int argc, char *argv[]) {
     assert(imageGetWidth(i) == width);
     assert(imageGetHeight(i) == height);
 
+    //Check getPixel
+    pixel startingCol {
+        .red = 0,
+        .green = 0,
+        .blue = 0
+    };
+    
+    bulkSet(img, startingCol);
+    
+    //Check setPixel
+    pixel col = {
+        .red = 0,
+        .green = 0,
+        .blue = 255
+    };
+    
+    bulkSet(img, col);
+    print(img, col);
 
-    //Check
-
-    //Check
+    //Check image generates properly
     generateImage(img);
     
     //Obeying newton
@@ -31,7 +47,7 @@ int main (int argc, char *argv[]) {
 }
 
 
-static void genereateImage(Image i) {
+static void generateImage (Image i) {
     
     unsigned char *buf;
     int size = imageAsBMP (i, &buf);
@@ -41,15 +57,9 @@ static void genereateImage(Image i) {
 
 }
 
-static void print (Image img) {
+static void bulkGet (Image img, pixel expectedColor) {
     int i = 0;
     int j = 0;
-    
-    pixel col = {
-        .red = 0,
-        .green = 0,
-        .blue = 255
-    };
     
     while (i < img->height) {
         while (j < img->width) {
@@ -58,12 +68,11 @@ static void print (Image img) {
                 .y = i
             };
             
-            imageSetPixel(img, p, col);         
+            pixel pix = imageGetPixel(img, p);
 
-            //pixel pix = imageGetPixel(img, p);
-
-            //printf("x: %d, y: %d\n", j, i); 
-            //printf("red: %d, green: %d, blue: %d \n", pix.red, pix.green, pix.blue); 
+            assert(expectedColor.red == pix.red);
+            assert(expectedColor.green == pix.green);
+            assert(expectedColor.blue == pix.blue);
 
             j++;
         }
@@ -73,3 +82,22 @@ static void print (Image img) {
     }
 }
 
+static void bulkSet (Image img, pixel newColor) {
+    int i = 0;
+    int j = 0;
+    
+    while (i < img->height) {
+        while (j < img->width) {
+            point p = {
+                .x = j,
+                .y = i
+            };
+            
+            imageSetPixel (img, p, newColor);
+            j++;
+        }
+
+        j = 0;
+        i++;
+    }
+}
