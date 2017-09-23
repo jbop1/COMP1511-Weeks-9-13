@@ -28,7 +28,7 @@ int main (int argc, char *argv[]) {
         .blue = 0
     };
     
-    bulkSet(i, startingCol);
+    //bulkSet(i, startingCol);
     
     //Check setPixel
     pixel col = {
@@ -37,8 +37,8 @@ int main (int argc, char *argv[]) {
         .blue = 255
     };
     
-    bulkSet(i, col);
-    bulkGet(i, col);
+//    bulkSet(i, col);
+  //  bulkGet(i, col);
     
     //Test circle
     pixel red = {

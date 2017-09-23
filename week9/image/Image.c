@@ -87,8 +87,8 @@ void imageDrawCircle (
 
     while (h < height) {
         while (w < width) {
-            double rad = pow(w - centre.x, 2) + pow(h - centre.y, 2);
-            if (rad <= pow (radius, 2)) {
+            double rad = (w - centre.x) * (w - centre.x) + (h - centre.y) * (h - centre.y);
+            if (rad < pow (radius, 2)) {
 
                 point p = {
                     .x = w,
