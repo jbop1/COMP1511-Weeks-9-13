@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <err.h>
+#include <math.h>
 
 #include "Image.h"
 
@@ -11,10 +13,9 @@ typedef struct _image {
 
 Image newImage (unsigned int width, unsigned int height) {
     Image img = calloc (1, sizeof (image));
-    if (img == null) {
+    if (img == NULL) {
         errx(EXIT_FAILURE, "calloc, failed");
     }
-
 
     img->width = width;
     img->height = height;
@@ -23,7 +24,7 @@ Image newImage (unsigned int width, unsigned int height) {
 
     new = calloc (height, sizeof (pixel *));
     
-    if (new == null) {
+    if (new == NULL) {
         errx(EXIT_FAILURE, "calloc failed");
     }
     
@@ -32,8 +33,8 @@ Image newImage (unsigned int width, unsigned int height) {
     while (i < height) {
         new[i] = calloc (width, sizeof (pixel));
         
-        if (new[i] == null) {
-            errx(EXIT_FAILURE, "calloc failed")'
+        if (new[i] == NULL) {
+            errx(EXIT_FAILURE, "calloc failed");
         }
         
         i++;
@@ -62,4 +63,45 @@ pixel imageGetPixel (Image i, point p) {
 
 void imageSetPixel (Image i, point p, pixel color) {
     i->data[p.y][p.x] = color;
+}
+
+void imageDrawLine (Image i, pixel color, point start, point end) {
+
+
+}
+
+void imageDrawRectangle (
+    Image i, pixel color, point bottomLeft, point topRight) {
+
+
+}
+
+void imageDrawCircle (
+    Image i, pixel color, point centre, unsigned int radius) {
+    
+    unsigned int width = imageGetWidth (i);
+    unsigned int height = imageGetHeight (i);
+
+    int w = 0;
+    int h = 0;
+
+    while (h < height) {
+        while (w < width) {
+            double rad = pow(w - centre.x, 2) + pow(h - centre.y, 2);
+            if (rad <= pow (radius, 2)) {
+
+                point p = {
+                    .x = w,
+                    .y = h
+                };
+
+                imageSetPixel (i, p, color);
+            }
+           
+            w++;
+        }
+
+        w = 0;
+        h++;
+    }
 }

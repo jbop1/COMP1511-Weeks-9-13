@@ -6,9 +6,14 @@
 
 #include "Image.h"
 
+//Function prototypes
+static void generateImage (Image i);
+static void bulkGet (Image img, pixel expectedColor);
+static void bulkSet (Image img, pixel newColor); 
+
 int main (int argc, char *argv[]) {
-    unsigned int width = 100;
-    unsigned int height = 100;
+    unsigned int width = 1000;
+    unsigned int height = 1000;
 
     Image i = newImage(width, height); 
     
@@ -17,13 +22,13 @@ int main (int argc, char *argv[]) {
     assert(imageGetHeight(i) == height);
 
     //Check getPixel
-    pixel startingCol {
+    pixel startingCol = {
         .red = 0,
         .green = 0,
         .blue = 0
     };
     
-    bulkSet(img, startingCol);
+    bulkSet(i, startingCol);
     
     //Check setPixel
     pixel col = {
@@ -32,11 +37,26 @@ int main (int argc, char *argv[]) {
         .blue = 255
     };
     
-    bulkSet(img, col);
-    print(img, col);
+    bulkSet(i, col);
+    bulkGet(i, col);
+    
+    //Test circle
+    pixel red = {
+        .red = 255,
+        .green = 0,
+        .blue = 0
+    };
+
+    
+    point cent = {
+        .x = 500,
+        .y = 500
+    };
+
+    imageDrawCircle (i, red, cent, 100); 
 
     //Check image generates properly
-    generateImage(img);
+    generateImage(i);
     
     //Obeying newton
     destroyImage(i);
@@ -61,8 +81,8 @@ static void bulkGet (Image img, pixel expectedColor) {
     int i = 0;
     int j = 0;
     
-    while (i < img->height) {
-        while (j < img->width) {
+    while (i < imageGetHeight(img)) {
+        while (j < imageGetWidth(img)) {
             point p = {
                 .x = j,
                 .y = i
@@ -79,15 +99,15 @@ static void bulkGet (Image img, pixel expectedColor) {
 
         j = 0;
         i++;
-    }
+   }
 }
 
 static void bulkSet (Image img, pixel newColor) {
     int i = 0;
     int j = 0;
     
-    while (i < img->height) {
-        while (j < img->width) {
+    while (i < imageGetHeight(img)) {
+        while (j < imageGetWidth(img)) {
             point p = {
                 .x = j,
                 .y = i

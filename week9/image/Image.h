@@ -42,7 +42,6 @@ pixel imageGetPixel (Image i, point p);
 // point's value to the pixel passed in.
 void imageSetPixel (Image i, point p, pixel color);
 
-/*
 ////////////////////////////////////////////////////////////////////////
 // For the activity "Drawing on an Image", you need to implement the
 // above, and these three functions:
@@ -83,7 +82,7 @@ void imageDrawCircle (
 void imageDrawEllipse (
     Image i, pixel color, point centre, double a, double b);
 
-
+/*
 ////////////////////////////////////////////////////////////////////////
 // For the challenge activity "Reticulating Splines", you need to
 // implement the eight non-challenge functions above, and this function:
@@ -107,7 +106,6 @@ void imageDrawEllipse (
 void imageDrawBezer (
     Image i, pixel color, double precision,
     point p0, point p1, point p2, point p3);
-
 */
 ////////////////////////////////////////////////////////////////////////
 // We also provide this useful helper function in `imageAsBMP.c`:
