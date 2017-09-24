@@ -27,6 +27,14 @@ Card newCard(char number, color color, suit suit) {
         errx (EXIT_FAILURE, "Card number out of range");
     }
     
+    if (suit > QUESTIONS || suit < HEARTS )  {
+        errx (EXIT_FAILURE, "Card suit out of range");
+    }
+
+    if (color > PURPLE || color < RED) {
+        errx (EXIT_FAILURE," Card color out of range");
+    }
+
     Card newCard = calloc (1, sizeof (card));
     
     if (newCard == NULL) {
