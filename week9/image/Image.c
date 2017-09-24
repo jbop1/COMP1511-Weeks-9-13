@@ -5,6 +5,9 @@
 
 #include "Image.h"
 
+#define TRUE 0
+#define FALSE (!TRUE)
+
 typedef struct _image {
     unsigned int width;
     unsigned int height;
@@ -65,31 +68,65 @@ void imageSetPixel (Image i, point p, pixel color) {
     i->data[p.y][p.x] = color;
 }
 
-void imageDrawLine (Image i, pixel color, point start, point end) {
-    
-    //Todo: Handle division by zero
-    if  (end.x - start.x == 0) {
-        
+int crossProduct (point a, point b) {
+    return (a.x * b.y) - (a.y * b.x);
+}
+
+int dotProduct (point a, point b) {
+    return a.x * b.x + a.y * b.y;
+}
+
+point produceVector (point a, point b) {
+    point vector = {
+        .x = b.x - a.x,
+        .y = b.y - a.y
+    };
+
+    return vector;
+}
+
+int getModulusSquared (point p) {
+    return (p.x * p.x) + (p.y * p.y);
+}
+
+int assertLine (point ba, point ca) {
+    if (abs(crossProduct(ba, ca)) != 0) {
+        return FALSE;
     }
 
-    int gradient = (end.y - start.y) / (end.x - start.x);
-    int b = start.y - (gradient * start.x);
+    if (dotProduct (ba, ca) < 0) {
+        return FALSE;
+    }
+
+    if (getModulusSquared (ba) < dotProduct(ba, ca)) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+void imageDrawLine (Image i, pixel color, point start, point end) {
 
     unsigned int width = imageGetWidth (i);
     unsigned int height = imageGetHeight (i);
+    
+    point startToEnd = produceVector (end, start);
+    int startToEndModSquare = getModulusSquared (startToEnd);
 
     int w = 0;
     int h = 0;
 
     while (h < height) {
         while (w < width) {
-            if (h == (gradient * w) + b) {
-                point p = {
-                    .x = w,
-                    .y = h
-                };
+            point currentPoint = {
+                .x = w,
+                .y = h
+            };
 
-                imageSetPixel (i, p, color);
+            point ca = produceVector (start, currentPoint);
+
+            if (assertLine(startToEnd, ca) == TRUE) {
+                imageSetPixel(i, currentPoint, color);
             }
 
             w++;

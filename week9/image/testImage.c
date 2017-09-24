@@ -56,8 +56,8 @@ int main (int argc, char *argv[]) {
     //imageDrawCircle (i, red, cent, 100); 
 
     point end = {
-        .x = 600,
-        .y = 500
+        .x = 500,
+        .y = 600
     };
 
     imageDrawLine(i, red, cent, end);
