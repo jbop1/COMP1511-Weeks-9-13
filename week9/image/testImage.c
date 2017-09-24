@@ -48,14 +48,14 @@ int main (int argc, char *argv[]) {
     };
 
     
-    point cent = {
+    point end = {
         .x = 500,
         .y = 500
     };
 
     //imageDrawCircle (i, red, cent, 100); 
 
-    point end = {
+    point cent = {
         .x = 500,
         .y = 600
     };

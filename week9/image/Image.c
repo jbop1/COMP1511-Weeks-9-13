@@ -5,7 +5,7 @@
 
 #include "Image.h"
 
-#define TRUE 0
+#define TRUE 1
 #define FALSE (!TRUE)
 
 typedef struct _image {
@@ -90,19 +90,21 @@ int getModulusSquared (point p) {
 }
 
 int assertLine (point ba, point ca) {
+    int onLine = TRUE;
+
     if (abs(crossProduct(ba, ca)) != 0) {
-        return FALSE;
+        onLine = FALSE;
     }
 
     if (dotProduct (ba, ca) < 0) {
-        return FALSE;
+        onLine = FALSE;
     }
 
     if (getModulusSquared (ba) < dotProduct(ba, ca)) {
-        return FALSE;
+        onLine = FALSE;
     }
 
-    return TRUE;
+    return onLine;
 }
 
 void imageDrawLine (Image i, pixel color, point start, point end) {
@@ -111,7 +113,6 @@ void imageDrawLine (Image i, pixel color, point start, point end) {
     unsigned int height = imageGetHeight (i);
     
     point startToEnd = produceVector (end, start);
-    int startToEndModSquare = getModulusSquared (startToEnd);
 
     int w = 0;
     int h = 0;
@@ -125,7 +126,7 @@ void imageDrawLine (Image i, pixel color, point start, point end) {
 
             point ca = produceVector (start, currentPoint);
 
-            if (assertLine(startToEnd, ca) == TRUE) {
+            if (assertLine(startToEnd, ca)) {
                 imageSetPixel(i, currentPoint, color);
             }
 
