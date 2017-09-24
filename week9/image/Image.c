@@ -140,7 +140,82 @@ void imageDrawLine (Image i, pixel color, point start, point end) {
 
 void imageDrawRectangle (
     Image i, pixel color, point bottomLeft, point topRight) {
+   
+
+    point p1 = {
+        .x = bottomLeft.x,
+        .y = topRight.y
+    };
+
+    point p2 = {
+        .x = topRight.x,
+        .y = topRight.y
+    };
+
+    point p3 = {
+        .x = topRight.x,
+        .y = bottomLeft.y
+    };
+
+    point p4 = {
+        .x = bottomLeft.x,
+        .y = bottomLeft.y
+    };
+
+    point top = produceVector (p1, p2);
+    point right = produceVector (p2, p3);
+    point bot = produceVector (p4, p3);
+    point left = produceVector (p1, p4);
+        
+    unsigned int width = imageGetWidth (i);
+    unsigned int height = imageGetHeight (i);
     
+    int w = 0;
+    int h = 0;
+
+    while (h < height) {
+        while (w < width) {
+            point currentPoint = {
+                .x = w,
+                .y = h
+            };
+            
+            int printPix = TRUE;
+
+            point p1cp = produceVector(p1, currentPoint);
+            point p2cp = produceVector(p2, currentPoint);
+            point p3cp = produceVector(p3, currentPoint);
+            point p4cp = produceVector(p4, currentPoint);
+
+            if (crossProduct(top, p1cp) > 0) {
+                printPix = FALSE;
+            }
+
+            if (crossProduct(right, p2cp) > 0) {
+                printPix = FALSE;
+            }
+            
+            if (crossProduct(bot, p4cp) < 0) {
+                printPix = FALSE;
+            }
+
+            if (crossProduct(left, p1cp) < 0) {
+                printPix = FALSE;
+            }
+
+            if (printPix) {
+                imageSetPixel (i, currentPoint, color);
+            }
+
+
+            w++;
+        }
+        
+        h++;
+        w = 0;
+    }
+
+
 
 }
 

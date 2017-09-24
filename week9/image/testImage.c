@@ -56,11 +56,11 @@ int main (int argc, char *argv[]) {
     //imageDrawCircle (i, red, cent, 100); 
 
     point cent = {
-        .x = 500,
+        .x = 600,
         .y = 600
     };
 
-    imageDrawLine(i, red, cent, end);
+    imageDrawRectangle(i, red, cent, end);
 
     //Check image generates properly
     generateImage(i);
