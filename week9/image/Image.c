@@ -66,13 +66,43 @@ void imageSetPixel (Image i, point p, pixel color) {
 }
 
 void imageDrawLine (Image i, pixel color, point start, point end) {
+    
+    //Todo: Handle division by zero
+    if  (end.x - start.x == 0) {
+        
+    }
 
+    int gradient = (end.y - start.y) / (end.x - start.x);
+    int b = start.y - (gradient * start.x);
 
+    unsigned int width = imageGetWidth (i);
+    unsigned int height = imageGetHeight (i);
+
+    int w = 0;
+    int h = 0;
+
+    while (h < height) {
+        while (w < width) {
+            if (h == (gradient * w) + b) {
+                point p = {
+                    .x = w,
+                    .y = h
+                };
+
+                imageSetPixel (i, p, color);
+            }
+
+            w++;
+        }
+        
+        h++;
+        w = 0;
+    }
 }
 
 void imageDrawRectangle (
     Image i, pixel color, point bottomLeft, point topRight) {
-
+    
 
 }
 

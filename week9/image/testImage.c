@@ -53,7 +53,14 @@ int main (int argc, char *argv[]) {
         .y = 500
     };
 
-    imageDrawCircle (i, red, cent, 100); 
+    //imageDrawCircle (i, red, cent, 100); 
+
+    point end = {
+        .x = 600,
+        .y = 500
+    };
+
+    imageDrawLine(i, red, cent, end);
 
     //Check image generates properly
     generateImage(i);
